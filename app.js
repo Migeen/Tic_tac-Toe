@@ -1,10 +1,5 @@
 let turn = "O";
 
-// document.addEventListener('DOMContentLoaded', function(){
-//         document.querySelectorAll('.inner-box').style.pointerEvents = 'none';
-// });
-
-    
 //Factory function 
 let gameBoard = (function () {
 
@@ -12,9 +7,9 @@ let gameBoard = (function () {
     let currentBoard = [null, null, null, null, null, null, null, null, null];
     let prevIndex = null;
 
+    //changes the turn of a player
     function taketurn(index) {        
 
-        console.log(index);
         if (turn === "O" &&  index !== prevIndex){
             turn = "X";
             prevIndex = index;
@@ -25,6 +20,7 @@ let gameBoard = (function () {
         return turn;
     }
 
+    //stores the position of the squares in an array currentBoard
     function store(turn,square){
         let board = currentBoard;
         currentBoard[square] = turn;
@@ -32,6 +28,7 @@ let gameBoard = (function () {
     }
 
     
+    // function that determines the game winner and displays it
     function checkAndDisplayWinner(){
         const display = document.querySelector('.display');
 
@@ -83,15 +80,47 @@ let gameBoard = (function () {
 
 
 
-let boards = document.querySelectorAll(".inner-box");
-boards = Array.from(boards);
+document.addEventListener('DOMContentLoaded',()=>{
 
-boards.forEach(bo => {
-    bo.addEventListener('click',function(){
-        let square = boards.indexOf(this);
-        let turn = gameBoard.taketurn(square);
-        gameBoard.store(turn,square);
-        gameBoard.checkAndDisplayWinner();
-        this.innerHTML= `<h1>${turn}</h1>`
-    })
-})
+
+    let boards = document.querySelectorAll(".inner-box");
+    boards = Array.from(boards);
+    const startBtn = document.querySelector('#start-btn');
+
+
+    // handles the Click events of the Game Board
+    function handleClick() {
+            let display = document.querySelector('.display');
+            let square = boards.indexOf(this);
+            let turn = gameBoard.taketurn(square);
+            gameBoard.store(turn, square);
+            gameBoard.checkAndDisplayWinner();
+            this.innerHTML = `<h1>${turn}</h1>`;
+        }
+
+    // disable the click events
+    function disableEventListener() {
+        boards.forEach(div =>{
+            div.removeEventListener('click', handleClick);
+            div.style.pointerEvents = 'none';
+        })
+    }
+
+    //enable the click events
+    function enableEventListener(){
+    boards.forEach(bo => {
+        bo.addEventListener('click', handleClick);
+        bo.style.pointerEvents = 'auto'
+    });
+    }
+
+    // button that enables the click events
+    startBtn.addEventListener('click', function(){
+        enableEventListener();
+        startBtn.disabled = true;
+    });
+
+    // Initially disable the click events listeners for the Game Board
+    disableEventListener();
+});
+
