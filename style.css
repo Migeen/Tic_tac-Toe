@@ -49,6 +49,21 @@
     color: black;
 }
 
+.btns{
+    display: flex;
+    justify-content: space-evenly;
+    align-items: center;
+    margin-top: 20px;
+    border: none;
+    height:auto;
+    width:690px;
+    font-size: 20px;
+    font-weight: 700;
+    text-align: center;
+    color: black;
+    
+}
+
 #start-btn{
     border: none;
     width: 120px;
@@ -63,4 +78,21 @@
 
 #start-btn:hover{
     background-color: rgb(214, 64, 37);
+}
+
+#reset-btn{
+    border: none;
+    width: 120px;
+    height: 60px;
+    background-color: rgb(64, 108, 252);
+    border-radius: 5px;
+    margin-top: 20px;
+    margin-left: 20px;
+    color: var(--color);
+    cursor: pointer;
+    
+}
+
+#reset-btn:hover{
+    background-color : rgb(27, 59, 165)
 }

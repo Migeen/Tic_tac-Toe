@@ -68,13 +68,6 @@ let gameBoard = (function () {
             display.innerHTML = 'It\'s a tie';
         }
     }
-
-    function reset(){
-        const squares = document.querySelectorAll('.inner-box');
-        squares.forEach(sq =>{
-            sq.textContent = '';
-        })
-    }
     return { currentBoard, taketurn, store, checkAndDisplayWinner };
 })();
 
@@ -84,9 +77,10 @@ document.addEventListener('DOMContentLoaded',()=>{
 
 
     let boards = document.querySelectorAll(".inner-box");
+    const display =  document.querySelector('.display');
     boards = Array.from(boards);
     const startBtn = document.querySelector('#start-btn');
-
+    const resetBtn = document.querySelector('#reset-btn');
 
     // handles the Click events of the Game Board
     function handleClick() {
@@ -96,6 +90,7 @@ document.addEventListener('DOMContentLoaded',()=>{
             gameBoard.store(turn, square);
             gameBoard.checkAndDisplayWinner();
             this.innerHTML = `<h1>${turn}</h1>`;
+            console.log(gameBoard.currentBoard);
         }
 
     // disable the click events
@@ -118,6 +113,21 @@ document.addEventListener('DOMContentLoaded',()=>{
     startBtn.addEventListener('click', function(){
         enableEventListener();
         startBtn.disabled = true;
+    });
+
+    function reset(){
+        boards.forEach(bo =>{
+            bo.textContent = '';
+            display.textContent = '';
+        })
+
+    }
+    
+    // reset button that clears the squares
+    resetBtn.addEventListener('click',function(){
+        reset();
+        disableEventListener();
+        startBtn.disabled = false;
     });
 
     // Initially disable the click events listeners for the Game Board
